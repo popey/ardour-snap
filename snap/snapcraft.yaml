@@ -1,0 +1,256 @@
+name: ardour
+version: "5.12"
+base: core18
+summary: the digital audio workstation
+description:  Ardour is a multichannel hard disk recorder (HDR) and digital audio
+ workstation (DAW).  It can be used to control, record, edit and run
+ complex audio setups.
+ .
+ Ardour supports pro-audio interfaces through the ALSA project, which
+ provides high quality, well designed device drivers and API's for audio
+ I/O under Linux. Any interface supported by ALSA can be used with Ardour.
+ This includes the all-digital 26 channel RME Hammerfall, the Midiman Delta
+ 1010 and many others.
+ .
+ Ardour has support for 24 bit samples using floating point internally,
+ non-linear editing with unlimited undo, a user-configurable mixer, MTC
+ master/slave capabilities, MIDI hardware control surface compatibility.
+ .
+ It supports MIDI Machine Control, and so can be controlled from any MMC
+ controller and many modern digital mixers.
+ .
+ Ardour contains a powerful multitrack audio editor/arranger that is
+ completely non-destructive and capable of all standard non-linear editing
+ operations (insert, replace, delete, move, trim, select, cut/copy/paste).
+ The editor has unlimited undo/redo capabilities and can save independent
+ "versions" of a track or an entire piece
+ .
+ Ardour's editor supports the community-developed LADSPA plugin standard.
+ Arbitrary chains of plugins can be attached to any portion of a track.
+ Every mixer strip can have any number of inputs and outputs, not just
+ mono, stereo or 5.1.  An N-way panner is included, with support for
+ various panning models.  Pre- and post-fader sends exist, each with their
+ own gain and pan controls.  Every mixer strip acts as its own bus, and
+ thus the bus count in Ardour is unlimited.  You can submix any number of
+ strips into another strip.
+ .
+ Ardours channel capacity is limited only by the number on your audio
+ interface and the ability of your disk subsystem to stream the data back
+ and forth.
+ .
+ JACK (the JACK Audio Connection Kit) is used for all audio I/O, permitting
+ data to be exchanged in perfect samplesync with other applications and/or
+ hardware audio interfaces.
+ .
+ Ardour is sample rate and size neutral - any hardware formats from 8 to 32
+ bits, and rates from 8kHz to 192kHz.  Internal processing in 32/64 bit
+ IEEE floating point format.
+ .
+
+confinement: strict
+grade: stable
+
+apps:
+  ardour:
+    command: |
+      desktop-launch $SNAP/usr/local/lib/ardour5/ardour-5.12.0
+    environment:
+      GTK_PATH: $SNAP/usr/local/etc/ardour5:$SNAP/usr/local/lib/ardour5:$GTK_PATH
+      LD_LIBRARY_PATH: $SNAP/usr/local/lib/ardour5/:$LD_LIBRARY_PATH
+      ARDOUR_DLL_PATH: $SNAP/usr/local/lib/ardour5
+      ARDOUR_CONFIG_PATH: $SNAP/usr/local/etc/ardour5
+      ARDOUR_DATA_PATH: $SNAP/usr/local/share/ardour5
+    plugs: [network, home, opengl, pulseaudio, desktop, desktop-legacy, x11, jack1]
+
+parts:
+  ardour:
+    plugin: waf
+    source: https://github.com/Ardour/ardour.git
+    source-tag: $SNAPCRAFT_PROJECT_VERSION
+    build-packages:
+      - cdbs
+      - autotools-dev
+      - gettext
+      - intltool
+      - itstool
+      - libarchive-dev
+      - libboost-dev
+      - libcurl4-gnutls-dev
+      - libfftw3-dev
+      - liblrdf0-dev
+      - libserd-dev
+      - libsord-dev
+      - libsuil-dev
+      - liblilv-dev
+      - libsratom-dev
+      - libsigc++-2.0-dev
+      - uuid-dev
+      - libxml2-dev
+      - libcwiid-dev
+      - libcairomm-1.0-dev
+      - libgtkmm-2.4-dev
+      - libpangomm-1.4-dev
+      - ladspa-sdk
+      - libasound2-dev
+      - libaubio-dev
+      - libjack-dev
+      - liblo-dev
+      - libltc-dev
+      - librubberband-dev
+      - libsamplerate0-dev
+      - libsndfile1-dev
+      - libtag1-dev
+      - lv2-dev
+      - vamp-plugin-sdk
+      - python-setuptools
+      - python-isodate
+      - python-rdflib
+    stage-packages:
+      - libgl1-mesa-dri
+      - libarchive13
+      - libasn1-8-heimdal
+      - libasound2
+      - libatk1.0-0
+      - libatkmm-1.6-1v5
+      - libaubio5
+      - libavcodec57
+      - libavformat57
+      - libavutil55
+      - libbluetooth3
+      - libbluray2
+      - libcairo2
+      - libcairomm-1.0-1v5
+      - libchromaprint1
+      - libcroco3
+      - libcrystalhd3
+      - libcurl3-gnutls
+      - libcwiid1
+      - libdatrie1
+      - libfftw3-double3
+      - libfftw3-single3
+      - libflac8
+      - libfontconfig1
+      - libfreetype6
+      - libgdk-pixbuf2.0-0
+      - libglibmm-2.4-1v5
+      - libgme0
+      - libgomp1
+      - libgraphite2-3
+      - libgsm1
+      - libgssapi3-heimdal
+      - libgtk2.0-0
+      - libgtkmm-2.4-1v5
+      - libharfbuzz0b
+      - libhcrypto4-heimdal
+      - libheimbase1-heimdal
+      - libheimntlm0-heimdal
+      - libhx509-5-heimdal
+      - libicu60
+      - libjack0
+      - libkrb5-26-heimdal
+      - libldap-2.4-2
+      - liblilv-0-0
+      - liblo7
+      - liblrdf0
+      - libmp3lame0
+      - libmpg123-0
+      - libnghttp2-14
+      - libnuma1
+      - libogg0
+      - libopenjp2-7
+      - libopenmpt0
+      - libopus0
+      - libpango-1.0-0
+      - libpangocairo-1.0-0
+      - libpangoft2-1.0-0
+      - libpangomm-1.4-1v5
+      - libpixman-1-0
+      - libpng16-16
+      - libpsl5
+      - libraptor2-0
+      - libroken18-heimdal
+      - librsvg2-2
+      - librtmp1
+      - librubberband2
+      - libsamplerate0
+      - libsasl2-2
+      - libserd-0-0
+      - libshine3
+      - libsigc++-2.0-0v5
+      - libsnappy1v5
+      - libsndfile1
+      - libsord-0-0
+      - libsoxr0
+      - libspeex1
+      - libsratom-0-0
+      - libssh-gcrypt-4
+      - libsuil-0-0
+      - libswresample2
+      - libtag1v5-vanilla
+      - libthai0
+      - libtheora0
+      - libtwolame0
+      - libva-drm2
+      - libva-x11-2
+      - libva2
+      - libvamp-hostsdk3v5
+      - libvamp-sdk2v5
+      - libvdpau1
+      - libvorbis0a
+      - libvorbisenc2
+      - libvorbisfile3
+      - libvpx5
+      - libwavpack1
+      - libwebp6
+      - libwebpmux3
+      - libwind0-heimdal
+      - libx11-6
+      - libx264-152
+      - libx265-146
+      - libxau6
+      - libxcb-render0
+      - libxcb-shm0
+      - libxcb1
+      - libxcomposite1
+      - libxcursor1
+      - libxdamage1
+      - libxdmcp6
+      - libxext6
+      - libxfixes3
+      - libxi6
+      - libxinerama1
+      - libxml2
+      - libxrandr2
+      - libxrender1
+      - libxslt1.1
+      - libxvidcore4
+      - libyajl2
+      - libzvbi0
+      - jackd1
+  desktop-gtk2:
+    build-packages:
+      - build-essential
+      - libgtk2.0-dev
+    make-parameters:
+      - FLAVOR=gtk2
+    plugin: make
+    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
+    source-subdir: gtk
+    stage-packages:
+      - libxkbcommon0
+      - ttf-ubuntu-font-family
+      - dmz-cursor-theme
+      - light-themes
+      - adwaita-icon-theme
+      - gnome-themes-standard
+      - shared-mime-info
+      - libgtk2.0-0
+      - libgdk-pixbuf2.0-0
+      - libglib2.0-bin
+      - libgtk2.0-bin
+      - unity-gtk2-module
+      - locales-all
+      - libappindicator1
+      - xdg-user-dirs
+      - ibus-gtk
+      - libibus-1.0-5

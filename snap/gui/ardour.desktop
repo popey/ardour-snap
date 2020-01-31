@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=Ardour4
+GenericName=Ardour Digital Audio Workstation 4
+Comment=Record, mix and master multi-track audio
+Keywords=audio;sound;jackd,DAW,multitrack,ladspa,lv2,midi
+Exec=/usr/bin/ardour4
+Icon=${SNAP}/meta/gui/ardour.png
+Terminal=false
+Type=Application
+Categories=AudioVideo;Audio;
